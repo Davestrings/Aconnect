@@ -1,0 +1,101 @@
+{% extends 'base.html'%}
+
+{% block title %} My Profile {% endblock title%}
+{% block content%}
+<!--MODAL-->
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Update your ChitChat profile
+  </div>
+  <div class="image content scrolling">
+    <div class="ui medium image">
+      <img src={{profile.avatar.url}}>
+    </div>
+    <div class="description">
+      <div class="ui header">Provide additional info about yourself. Providing this makes it easier for your friend to find you</div>
+     <form action="" method="POST" class="ui form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+    </div>
+  </div>
+  <div class="actions">
+    <button type="submit"  class="ui positive right labeled icon button">
+      Update
+      <i class="checkmark icon"></i>
+    </button>
+      </form>
+  </div>
+</div>
+<!--MODAL-->
+<div class="ui segment">
+    {%if confirm %}
+        <div class="ui teal message">Your profile has been updated <i class="checkmark icon"></i></div>
+    {% endif %}
+    <h3>profile: {{request.user}}</h3>
+        <div class="ui grid">
+            <div class="row">
+                <div class="six wide column">
+                <img class="ui medium bordered circular image " src="{{profile.avatar.url}}"/>
+                <div id="mt-5" style="margin-top: 10px">
+                    <button class="ui secondary button" id="modal-btn">Update your profile</button>
+                </div>
+            </div>
+            <div class="ten wide column">
+                <table class="ui table">
+                    <tbody>
+                        <tr>
+                            <td>Username</td>
+                            <td class="profile-detail" style="">{{profile.user}}</td>
+                        </tr>
+                        <tr>
+                            <td>Last Name</td>
+                            <td>{{profile.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>First Name</td>
+                            <td>{{profile.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Date of Birth</td>
+                            <td>{{profile.DOB}}</td>
+                        </tr>
+                        <tr>
+                            <td>Nationality</td>
+                            <td>{{profile.country}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>{{profile.address}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Number</td>
+                            <td>{{profile.phone_number}}</td>
+                        </tr>
+                        <tr>
+                            <td>About Me</td>
+                            <td>{{profile.bio}}</td>
+                        </tr>
+                        <tr>
+                            <td>No of Friends</td>
+                            <td>You have {{profile.get_friends_number}} friends</td>
+                        </tr>
+                        <tr>
+                            <td>Friends</td>
+                            <td>
+                                <ul>
+                                    {% for friend in profile.get_friends%}
+                                        <li>{{friend}}</li>
+                                    {%endfor%}
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+</div>
+
+
+{% endblock content%}
