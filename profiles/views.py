@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Profile, Relationship
 from .forms import ProfileModelForm
+from django.db.models import Q
 from django.views.generic import ListView
 from django.contrib.auth.models import User
 
@@ -27,11 +28,37 @@ def my_profile_view(request):
 def invite_received_view(request):
     profile = Profile.objects.get(user=request.user)
     query = Relationship.objects.invitations_received(profile)
-
+    results = list(map(lambda x: x.sender, query))
+    is_empty = False
+    if len(results) == 0:
+        is_empty = True
     context = {
-        'query': query,
+        'query': results,
+        'is_empty': is_empty,
     }
     return render(request, 'profile/invite.html', context)
+
+
+def accept_invitation(request):
+    if request.method == "POST":
+        pk = request.POST.get('profile_pk')
+        sender = Profile.objects.get(pk=pk)
+        receiver = Profile.objects.get(user=request.user)
+        rel = get_object_or_404(Relationship, sender=sender, receiver=receiver)
+        if rel.status == 'send':
+            rel.status = 'accepted'
+            rel.save()
+    return redirect('profiles:invites')
+
+
+def reject_invitation(request):
+    if request.method == "POST":
+        pk = request.POST.get('profile_pk')
+        sender = Profile.objects.get(pk=pk)
+        receiver = Profile.objects.get(user=request.user)
+        rel = get_object_or_404(Relationship, sender=sender, receiver=receiver)
+        rel.delete()
+    return redirect('profiles:invites')
 
 
 # function based view for profile list
@@ -90,3 +117,31 @@ class ProfileListView(ListView):
             context["is_empty"] = True
 
         return context
+
+
+def send_invitation(request):
+    if request.method == 'POST':
+        pk = request.POST.get('profile_pk')
+        user = request.user
+        sender = Profile.objects.get(user=user)
+        receiver = Profile.objects.get(pk=pk)
+
+        rel = Relationship.objects.create(sender=sender, receiver=receiver, status='send')
+
+        return redirect(request.META.get('HTTP_REFERER'))
+    return redirect('profiles:my_profile_view')
+
+
+def remove_from_friends(request):
+    if request.method == 'POST':
+        pk = request.POST.get('profile_pk')
+        user = request.user
+        sender = Profile.objects.get(user=user)
+        receiver = Profile.objects.get(pk=pk)
+
+        rel = Relationship.objects.get(
+            (Q(sender=sender) & Q(receiver=receiver)) | (Q(sender=receiver) & Q(receiver=sender))
+        )
+        rel.delete()
+        return redirect(request.META.get('HTTP_REFERER'))
+    return redirect('profiles:my_profile_view')

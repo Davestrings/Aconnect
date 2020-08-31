@@ -20,6 +20,9 @@ body{
     color: #005cbf;
     /*border: 1px solid red !important;*/
 }
+.w_big{
+    width:200px !important;
+}
 .bwhite-lg{
     background-color: transparent !important;
 }
