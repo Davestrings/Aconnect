@@ -1,0 +1,33 @@
+body{
+    background-color: #f8f8f8 !important;
+}
+.nav{
+    border-radius:0px !important;
+    padding: 10px 0 ;
+    background-color: #396afc !important;
+}
+#mt-5{
+    margin-top: 5px !important;
+    /*border: 1px solid red !important;*/
+}
+.mb-7{
+    margin-bottom: 7px !important ;
+}
+.profile-detail{
+    font-family: "Raleway", sans-serif;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #005cbf;
+    /*border: 1px solid red !important;*/
+}
+.bwhite-lg{
+    background-color: transparent !important;
+}
+.bwhite-sm{
+    background-color: transparent !important;
+    width: 10px !important;
+}
+.comment-box{
+    display: none;
+}
+

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %} Friend Requests {% endblock title%}
+
+{% block content %}
+    <ul>
+        {% for request in query %}
+            <li>{{request}}</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
