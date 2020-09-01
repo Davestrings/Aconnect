@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -112,6 +113,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+LOGIN_URL ='login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL ='home'
+LOGOUT_REDIRECT_URL ='home'
 
 STATIC_URL = '/static/'
 

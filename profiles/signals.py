@@ -31,3 +31,9 @@ def pre_delete_remove_from_friends(sender, instance, **kwargs):
     receiver.friends.remove(sender.user)
     sender.save()
     receiver.save()
+
+# @receiver(post_save, sender=User)
+# def update_profile_signal(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
+#     instance.profile.save()
