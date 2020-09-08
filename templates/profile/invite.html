@@ -29,7 +29,7 @@
                                 Accept Invite
                             </button>
                         </form>
-                        <form action="{%url 'profiles:reject_invite' %}" method="POST">
+                        <form action="{% url 'profiles:reject_invite' %}" method="POST">
                              {% csrf_token %}
                             <input type="hidden" name="profile_pk" value="{{obj.pk}}">
                             <button type="submit" class="ui negative basic button w-big mb-7">
