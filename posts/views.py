@@ -48,6 +48,7 @@ def post_comment_create_and_list_view(request):
     }
     return render(request, 'posts/main.html', context)
 
+
 @login_required
 def like_unlike_post(request):
     user = request.user
@@ -76,6 +77,7 @@ def like_unlike_post(request):
 
     return redirect('posts:main_post_view')
 
+
 # @login_required
 class PostDeleteView(DeleteView):
     model = Post
@@ -88,6 +90,7 @@ class PostDeleteView(DeleteView):
         if not obj.author.user == self.request.user:
             messages.warning(self.request, 'Sorry, only post author is allowed to delete a post')
         return obj
+
 
 # @login_required
 class PostUpdateView(UpdateView):

@@ -4,9 +4,11 @@ from .forms import ProfileModelForm
 from django.db.models import Q
 from django.views.generic import ListView
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required(login_url="/login/")
 def my_profile_view(request):
     # get profile of the current user
     profile = Profile.objects.get(user=request.user)
@@ -62,6 +64,7 @@ def reject_invitation(request):
 
 
 # function based view for profile list
+# @login_required(login_url="/login/")
 def profile_list_view(request):
     user = request.user
     qs = Profile.objects.get_all_profiles(user)
@@ -84,6 +87,7 @@ def profiles_i_can_invite(request):
 
 
 # class based view  for list of user profiles in the system
+# @login_required(login_url="/login/")
 class ProfileListView(ListView):
     model = Profile
     template_name = 'profile/profile_list.html'
@@ -119,6 +123,7 @@ class ProfileListView(ListView):
         return context
 
 
+@login_required(login_url="/login/")
 def send_invitation(request):
     if request.method == 'POST':
         pk = request.POST.get('profile_pk')
@@ -132,6 +137,7 @@ def send_invitation(request):
     return redirect('profiles:my_profile_view')
 
 
+@login_required(login_url="/login/")
 def remove_from_friends(request):
     if request.method == 'POST':
         pk = request.POST.get('profile_pk')

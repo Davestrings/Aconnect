@@ -13,6 +13,7 @@
             <div class="ui header">Provide additional info about yourself. Providing this makes it easier for your friend to find you</div>
             <form action="" method="POST" class="ui form" enctype="multipart/form-data">
                 {% csrf_token %} {{form.as_p}}
+            </form>
         </div>
     </div>
     <div class="actions">
@@ -20,7 +21,7 @@
       Update
       <i class="checkmark icon"></i>
     </button>
-        </form>
+
     </div>
 </div>
 <!--MODAL-->
@@ -32,7 +33,11 @@
     <div class="ui grid">
         <div class="row">
             <div class="six wide column">
+                {% if profile.avatar %}
                 <img class="ui medium bordered circular image " src="{{profile.avatar.url}}" />
+                {% else %}
+                <img class="ui medium bordered circular image " src="../../../static_cdn/media_root/avatar.png" />
+                {% endif %}
                 <div id="mt-5" style="margin-top: 10px">
                     <button class="ui secondary button" id="modal-btn">Update your profile</button>
                 </div>

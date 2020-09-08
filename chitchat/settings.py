@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import cloudinary
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'posts',
     'profiles',
+    #     third party
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -111,13 +114,21 @@ USE_L10N = True
 
 USE_TZ = True
 
+# cloudinary config file
+cloudinary.config(
+    cloud_name="davestrings",
+    api_key="525443994728777",
+    api_secret="zGPWlRmCiZxyOTKCZRC--XKmlqM",
+    secure=True
+)
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-LOGIN_URL ='login'
+LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL ='home'
-LOGOUT_REDIRECT_URL ='home'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 STATIC_URL = '/static/'
 
